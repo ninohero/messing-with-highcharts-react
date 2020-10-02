@@ -1,0 +1,144 @@
+{
+  "name": "flightdeck",
+  "version": "1.4.0",
+  "description": "A web application for DSM leadership to see an organization health overview",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "@nike/nr-sole": "^2.12.4",
+    "@nike/nr-sole-xl-status-indicator-list": "^1.7.0",
+    "@nike/nr-sole-xl-theme-provider": "^4.4.0",
+    "@nike/nr-vamp-xl-user-avatar": "^0.5.0",
+    "@okta/okta-react": "^2.0.1",
+    "@reduxjs/toolkit": "^1.4.0",
+    "axios": "^0.19.2",
+    "d3-array": "^2.5.1",
+    "date-fns": "^2.16.1",
+    "dotenv": "^8.2.0",
+    "highcharts": "^8.2.0",
+    "highcharts-react-official": "^3.0.0",
+    "html2canvas": "^1.0.0-rc.7",
+    "lodash": "^4.17.20",
+    "mustache": "^4.0.1",
+    "node-sass": "^4.14.1",
+    "numeral": "^2.0.6",
+    "query-string": "^6.13.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.0",
+    "resize-observer-polyfill": "^1.5.1",
+    "semver": "^7.3.2",
+    "typescript": "^4.0.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.0.4",
+    "@testing-library/user-event": "^12.1.5",
+    "@types/d3-array": "^2.0.0",
+    "@types/jest": "^26.0.13",
+    "@types/lodash": "^4.14.161",
+    "@types/node": "^14.10.1",
+    "@types/numeral": "0.0.28",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-redux": "^7.1.9",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/testing-library__jest-dom": "^5.9.2",
+    "@types/testing-library__react": "^10.2.0",
+    "@types/webpack-env": "^1.15.2",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
+    "@welldone-software/why-did-you-render": "^4.3.2",
+    "commit-template": "^1.0.0",
+    "commitizen": "^4.2.1",
+    "concurrently": "4.1.0",
+    "cypress": "^5.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-airbnb-typescript": "^9.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-react-app": "^5.2.1",
+    "eslint-loader": "3.0.2",
+    "eslint-plugin-cypress": "^2.11.1",
+    "eslint-plugin-flowtype": "3.13.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-json": "^2.1.2",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.6",
+    "eslint-plugin-react-hooks": "^4.0.0",
+    "git-cz": "^4.7.1",
+    "husky": "^4.2.5",
+    "jest-junit": "^10.0.0",
+    "lint-staged": "^10.3.0",
+    "node-git-utils": "^1.6.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "^26.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "REACT_APP_VERSION=$npm_package_version react-scripts build",
+    "build:prod": "REACT_APP_VERSION=$npm_package_version REACT_APP_ENV=prod npm run build",
+    "test": "react-scripts test --env jest-environment-jsdom-fourteen",
+    "test:unit": "react-scripts test --silent --env jest-environment-jsdom-fourteen",
+    "test:unit:coverage": "CI=true react-scripts test --coverage --reporters=default --reporters=jest-junit --silent --env jest-environment-jsdom-fourteen",
+    "commit": "git-cz",
+    "lint": "eslint ./src/**/*.{js,ts,tsx} --fix",
+    "lint:scripts": "eslint ./scripts --fix",
+    "lint:all": "eslint ./scripts  ./src/**/*.{js,ts,tsx} --fix",
+    "lint:report": "eslint ./src/**/*.{js,ts,tsx} --fix --format=json > eslintreport.json",
+    "gen": "node ./scripts/generate.js",
+    "cy:open": "cypress open 'cypress/integration/tests/**'",
+    "cy:open-test": "cypress open --env stage=test 'cypress/integration/tests/**'",
+    "cy:run": "cypress run --headless --browser chrome --spec 'cypress/integration/tests/**'",
+    "cy:run-test": "cypress run --headless --browser chrome --env stage=test --spec 'cypress/integration/tests/**'",
+    "newrelic-configure": "node ./scripts/generateNewRelicScript.js"
+  },
+  "eslintConfig": {
+    "extends": ["react-app", "airbnb-base"]
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,ts,tsx}": [
+      "npx prettier --write",
+      "eslint --fix-dry-run"
+    ],
+    "*.{json}": ["npx prettier --write", "eslint --fix-dry-run"]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -e $GIT_PARAMS",
+      "prepare-commit-msg": "commit-template ./scripts/commit-template",
+      "pre-commit": "lint-staged",
+      "post-checkout": "./scripts/git-setup.sh"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/public",
+      "/scripts",
+      "/nginx"
+    ],
+    "coverageReporters": ["json-summary", "lcov"]
+  },
+  "browserslist": {
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
